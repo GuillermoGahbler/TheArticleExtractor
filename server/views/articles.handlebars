@@ -1,0 +1,12 @@
+<section>
+    {{#each articles}}
+    <article>
+        <div>
+            <h1>{{this.headline}}</h1>
+            <button>save article</button>
+        </div>
+        <p>{{this.summary}}</p>
+        <a href={{this.url}} target="_blank">read more (link)</a>
+    </article>
+    {{/each}}
+</section>
