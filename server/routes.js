@@ -3,36 +3,25 @@ const db = require('../database');
 const scraper = require('../scraper');
 
 router.get('/', (req, res) => {
-    res.render('home.handlebars')
+  res.render('home.handlebars')
 })
 
 
 router.get('/articles', (req, res, next) => {
-    scraper('http://www.kpbs.org/news/')
-        .then(data => {
-            db.article.insertMany(data, (err) => {
-                if (err) next(err);
+  scraper('http://www.kpbs.org/news/')
+    .then(articles => {
+      return articles
+        .forEach(article => db.article.createIfNotExist(article));
+    })
 
-                db.article.find({})
-                    .exec((err, doc) => {
-
-                        if (err) next(err)
-                        res.render('articles.handlebars', {
-                            articles: doc
-                        });
-
-                    })
-            })
-
-
-
-
-
-        })
-        .catch(error => next(error))
-
-
+   .then(()=> {
+      return db.article.getLatestArticles(5)
+      .then(articles => res.render('articles.handlebars', articles))
+    })
+    .catch(error => next(error))
 })
+
+
 
 
 

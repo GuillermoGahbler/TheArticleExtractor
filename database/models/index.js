@@ -1,4 +1,4 @@
 module.exports={
-    articles: require('./articles')
+    articleSchema: require('./articles')
 }
 
