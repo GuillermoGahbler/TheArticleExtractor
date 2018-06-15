@@ -1,7 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-
-const articleSchema = new Schema({
+module.exports = {
     headline: {
         type: String,
     },
@@ -11,7 +8,6 @@ const articleSchema = new Schema({
     url: {
         type: String,
     }
-});
+};
 
 
-module.exports = articleSchema
